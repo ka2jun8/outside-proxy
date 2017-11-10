@@ -1,7 +1,7 @@
 import { ExpressServer } from "./express";
 require("dotenv").config();
 
-const port: number = Number(process.env.port) || 3000;
+const port: number = Number(process.env.PORT) || 8080;
 const express = new ExpressServer(port);
 
 process.on("SIGINT", function () {
