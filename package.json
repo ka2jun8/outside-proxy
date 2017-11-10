@@ -1,0 +1,29 @@
+{
+  "name": "outside-proxy-server",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "kani",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "lint": "tslint --project ./",
+    "heroku-postbuild": "npm install typescript && tsc -v && tsc"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "eventemitter3": "^2.0.3",
+    "express": "^4.16.2",
+    "firebase-admin": "^5.4.3",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "@types/eventemitter3": "^2.0.2",
+    "@types/express": "^4.0.39",
+    "@types/node": "^8.0.50",
+    "@types/underscore": "^1.8.4",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.1"
+  }
+}
