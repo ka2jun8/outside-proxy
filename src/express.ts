@@ -97,14 +97,8 @@ export class ExpressServer {
         });
 
         router.post("/slack/callback", (req, res) => {
-            let body = null;
-            if(typeof req.body === "string"){
-                body = req.body;
-            }else {
-                body = JSON.stringify(req.body);
-            }
-            console.log("/slack/callback ", body);
-            const callbackInfo: SlackCallback = req.body;
+            console.log("/slack/callback ", req.body.payload.callback_id);
+            const callbackInfo: SlackCallback = req.body.payload;
             const path = "slack/callback";
             if(callbackInfo.callback_id){
                 this.push(path, callbackInfo.callback_id, callbackInfo).then((result) => {
