@@ -97,31 +97,34 @@ export class ExpressServer {
         });
 
         router.post("/slack/callback", (req, res) => {
-            console.log("/slack/callback ");
+            console.log("/slack/callback ", {header: req.header, token: req.body.token});
             const callbackInfo: SlackCallback = req.body;
             const path = "slack/callback";
-            this.push(path, callbackInfo.callback_id, callbackInfo).then((result) => {
-                console.log("posted");
-            }).catch((error) => {
-                console.error(error);
-            });
-            res.send("Accept slack/callback");
+            if(callbackInfo.callback_id){
+                this.push(path, callbackInfo.callback_id, callbackInfo).then((result) => {
+                    console.log("posted");
+                }).catch((error) => {
+                    console.error(error);
+                });
+            }
+            res.send("処理中だよ...");
         });
 
-        app.use("/api/", this.checkBearerToken);
+        // tokenを確認したい
+        // app.use("/api/", this.checkBearerToken);
         app.use("/api/v1", router);
         server.listen(port, () => console.log("start"));
     }
 
-    checkBearerToken(req, res, next) {
-        let result = false;
-        const token = req.headers.authorization;
-        if(token === "Bearer "+MASTER_TOKEN) {
-            next();
-        }else {
-            res.send("You must need a bearer token.");
-        }
-    }
+    // checkBearerToken(req, res, next) {
+    //     let result = false;
+    //     const token = req.headers.authorization;
+    //     if(token === "Bearer "+MASTER_TOKEN) {
+    //         next();
+    //     }else {
+    //         res.send("You must need a bearer token.");
+    //     }
+    // }
 
     generateId(targetPath: string): string {
         return this.fb.database().ref().child(targetPath).push().key;
